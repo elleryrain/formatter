@@ -1,0 +1,15 @@
+{
+  "name": "xml-formatter",
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "start": "tsx ./src/index.ts"
+  },
+  "dependencies": {
+    "@types/node": "^24.10.1",
+    "fast-xml-parser": "^5.3.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
