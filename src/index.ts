@@ -14,16 +14,28 @@ const builder = new XMLBuilder({
 const files = fs.readdirSync(FILES_DIR).filter((f) => f.endsWith(".xml"));
 
 for (const file of files) {
+  console.log("file_name: ", file);
   const filePath = path.join(FILES_DIR, file);
   console.log(`Обрабатываю ${filePath}`);
 
   const xmlContent = fs.readFileSync(filePath, "utf-8");
+
   const json = parser.parse(xmlContent);
-  if (json.Drawable && json.Drawable.Name) {
+
+  if (json.Drawable?.Name) {
     json.Drawable.Name = (json.Drawable.Name as string).replace(/\.model$/, "");
   }
-  console.log(json);
+
   const newXml = builder.build(json);
-  fs.writeFileSync(filePath, newXml, "utf-8");
-  console.log(`Закончил обработку ${filePath}`);
+
+  const newFileName = file.replace(/\.model(?=\.ydr\.xml$)/, "");
+  const newFilePath = path.join(FILES_DIR, newFileName);
+
+  if (file.includes(".model")) {
+    fs.unlinkSync(filePath);
+    console.log(`Удалён старый файл: ${file}`);
+  }
+
+  fs.writeFileSync(newFilePath, newXml, "utf-8");
+  console.log(`Создан новый файл: ${newFileName}`);
 }
