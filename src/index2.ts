@@ -68,7 +68,7 @@ try {
   process.exit(3);
 }
 
-let nameChanged = 0;
+let archetypeChanged = 0;
 let flagsChanged = 0;
 let lodDistChanged = 0;
 
@@ -85,9 +85,9 @@ function walk(node: any): void {
   for (const key of Object.keys(node)) {
     const val = node[key];
 
-    if (key === "name") {
+    if (key === "archetypeName") {
       node[key] = newName;
-      nameChanged++;
+      archetypeChanged++;
       continue;
     }
 
@@ -143,6 +143,6 @@ fs.writeFileSync(outPath, outXml, "utf8");
 console.log("Done.");
 console.log(`Input:  ${inPath}`);
 console.log(`Output: ${outPath}`);
-console.log(`<name> updated: ${nameChanged} => "${newName}"`);
+console.log(`<archetypeName> updated: ${archetypeChanged} => "${newName}"`);
 console.log(`<flags @value> updated: ${flagsChanged} => "${newFlags}"`);
 console.log(`<lodDist @value> updated: ${lodDistChanged} => "${newLodDist}"`);
